@@ -123,8 +123,10 @@ public class SkinAPI {
             writer.write("\r\n--".concat(boundary).concat("--"));
         }
 
+        if(conn.getResponseCode() == HttpURLConnection.HTTP_NO_CONTENT)
+            return true;
         Common.throwMojangException(new String(IOUtils.readFully(IOUtils.handleInputStream(conn)), UTF_8));
-        return conn.getResponseCode() == HttpURLConnection.HTTP_NO_CONTENT;
+        return false;
     }
     
     /**
